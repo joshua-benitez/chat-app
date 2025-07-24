@@ -13,11 +13,6 @@ function sendMessage() {
   }
 }
 
-// Function to handle incoming messages
-socket.on("chat message", function (message) {
-  displayMessage(message);
-});
-
 // Function to display a message in the chat
 function displayMessage(message) {
   const messages = document.querySelector("#messages");
@@ -25,10 +20,6 @@ function displayMessage(message) {
   msg.textContent = message;
   messages.appendChild(msg);
 }
-// Function to handle the 'messageReceived' event
-socket.on("messageReceived", function (response) {
-  displayMessage(response);
-});
 
 // Function to handle form submission
 document.querySelector("#chat-form").addEventListener("submit", function (event) {
@@ -51,3 +42,4 @@ socket.on("disconnect", function () {
   console.log("Disconnected from server");
   displayMessage("You have been disconnected from the server.");
 });
+
