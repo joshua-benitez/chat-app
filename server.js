@@ -7,7 +7,7 @@ app.use(express.static('public'));
 io.on('connection', client => {
     client.on('message', message => {
         console.log('Received message:', message);
-        client.emit('Message received: ' + message);
+        client.emit('messageReceived', 'Message received: ' + message);
     });
     client.on('disconnect', () => {
         console.log('Client disconnected');
