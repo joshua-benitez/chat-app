@@ -3,7 +3,7 @@ const socket = io("http://localhost:5500");
 
 // Function to send a message
 function sendMessage() {
-  const input = document.querySelector(".message-input");
+  const input = document.querySelector("#message-input");
   const message = input.value.trim();
 
   if (message) {
@@ -20,7 +20,7 @@ socket.on("chat message", function (message) {
 
 // Function to display a message in the chat
 function displayMessage(message) {
-  const messages = document.querySelector(".messages");
+  const messages = document.querySelector("#messages");
   const msg = document.createElement("div");
   msg.textContent = message;
   messages.appendChild(msg);
@@ -31,7 +31,7 @@ socket.on("messageReceived", function (response) {
 });
 
 // Function to handle form submission
-document.querySelector(".message-form").addEventListener("submit", function (event) {
+document.querySelector("#chat-form").addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent the form from submitting normally
   sendMessage(); // Call the function to send the message
 });
