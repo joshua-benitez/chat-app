@@ -1,13 +1,13 @@
 // Initialize socket.io
 const socket = io("http://localhost:5500");
-
+const username = prompt("Enter your name:");
 // Function to send a message
 function sendMessage() {
   const input = document.querySelector("#message-input");
   const message = input.value.trim();
-  
+
   if (message) {
-    socket.emit("message", message);
+    socket.emit("chat message", { username, message });
     displayMessage("You: " + message);
     input.value = "";
   }
@@ -22,7 +22,8 @@ function displayMessage(message) {
 }
 
 // Function to handle form submission
-document.querySelector("#chat-form")
+document
+  .querySelector("#chat-form")
   .addEventListener("submit", function (event) {
     event.preventDefault();
     sendMessage();
@@ -34,9 +35,8 @@ socket.on("connect", function () {
   displayMessage("You are connected to the server.");
 });
 // Function to handle the 'message' event
-socket.on("message", function (message) {
-  console.log("Received message:", message);
-  displayMessage("Server: " + message);
+socket.on("chat message", function (data) {
+  displayMessage(`${data.username}: ${data.message}`);
 });
 
 // Function to handle the 'disconnect' event
