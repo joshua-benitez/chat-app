@@ -7,9 +7,9 @@ function sendMessage() {
   const message = input.value.trim();
 
   if (message) {
-    socket.emit("chat message", { username, message });
-    displayMessage("You: " + message);
-    input.value = "";
+    socket.emit("chat message", data, () => {
+      input.value = "";
+    });
   }
 }
 
@@ -32,15 +32,23 @@ document
 // Function to handle the 'connect' event
 socket.on("connect", function () {
   console.log("Connected to server");
-  displayMessage("You are connected to the server.");
 });
 // Function to handle the 'message' event
-socket.on("chat message", function (data) {
-  displayMessage(`${data.username}: ${data.message}`);
-});
+socket.on("chat message", function (data) {});
 
 // Function to handle the 'disconnect' event
 socket.on("disconnect", function () {
   console.log("Disconnected from server");
-  displayMessage("You have been disconnected from the server.");
+});
+
+// Function to get time stamp
+function getTimeStamp() {
+  const now = new Date();
+  return now.toLocaleTimeString();
+}
+
+// Add time stamp to messages
+socket.on("chat message", function (data) {
+  const timeStamp = getTimeStamp();
+  displayMessage(`${data.username} [${timeStamp}]: ${data.message}`);
 });
